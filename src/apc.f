@@ -1,3 +1,52 @@
+      SUBROUTINE apc_wrapper(m, n, mtx_a, mtx_b, indices)
+      implicit none
+
+      integer i, j, k, m, n, Z, Nmax
+      parameter (Nmax=2700)
+      integer indices(n), pjtion (3*Nmax, 3*Nmax), tmp_indices(3*Nmax)
+      real*8 mtx_a(m,n), mtx_b(m,n), tmp (m,n)
+
+
+      do i=1, n
+         do j=1, n
+            tmp(i,j)=0.0d0
+            do k=1, m
+               tmp(i, j) = tmp(i,j) + mtx_a(k, i) * mtx_b(k, j)
+            enddo
+         enddo
+      enddo
+
+      do i=1, n
+        do j=1, n
+           pjtion(i,j)=int(tmp(i,j)**2*1.d5)
+        enddo
+      enddo
+
+      do i=1, n
+         do j=1, n
+            if((j.lt.(i-4)).or.(j.gt.(i+4))) then
+              pjtion(i,j)=-1*ifix(sngl(1.d5))
+            endif
+         enddo
+      enddo
+
+      do i=1, n
+         do j=1, n
+            pjtion(i,j)= -1 * pjtion(i,j)
+         enddo
+      enddo
+
+
+      call apc(n, pjtion, tmp_indices, z)
+
+      do i=1, n
+        indices(i) = tmp_indices(i)
+      enddo
+
+      RETURN 
+      END
+
+
 C     ******* SAMPLE CALLING PROGRAM FOR SUBROUTINE APC	   *******
 C     ***     (MIN-COST	ASSIGNMENT PROBLEM)		       ***
 C     ***						       ***
