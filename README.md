@@ -8,5 +8,5 @@ También comparten los modos, índices y pesos del frame 0.
 indicaría, sino q ya están ordenadas según su archivo
 "0-lbnoteq_ca_subspace_countk.dat" correspondiente.
  
-17-4-19: sigo con "long_min_cost_20_analysis" y "short_min_cost_20_analysis"
-el resto serán descartadas.
+3-5-19: sigo con "long_analysis" y "short_analysis" el resto serán
+descartadas.
